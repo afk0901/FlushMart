@@ -23,58 +23,39 @@ class TestGetProducts(TestCase):
             price=lambda: faker.pydecimal(left_digits=7, right_digits=2, positive=True),
         )
 
+    def assert_entity_equal(self, product_model, entity):
+        assert entity == CustomerProductEntity(
+            product_name=product_model.product_name,
+            description=product_model.description,
+            price=product_model.price,
+        )
+
     def test_get_first_ten_product_successfully(self):
         self.customer_product_recipe.make(_quantity=11)
         products = SQLCustomerProductsRepository().get_first_ten_products()
         assert len(products) == 10
 
         # Randomly sampling the returned list
+        self.assert_entity_equal(product_model=products[0], entity=products[0])
+        self.assert_entity_equal(product_model=products[3], entity=products[3])
+        self.assert_entity_equal(product_model=products[9], entity=products[9])
 
-        customer_product_entitity0 = CustomerProductEntity(
-            product_name=products[0].product_name,
-            description=products[0].description,
-            price=products[0].price,
-        )
-
-        customer_product_entitity3 = CustomerProductEntity(
-            product_name=products[3].product_name,
-            description=products[3].description,
-            price=products[3].price,
-        )
-
-        customer_product_entitity9 = CustomerProductEntity(
-            product_name=products[9].product_name,
-            description=products[9].description,
-            price=products[9].price,
-        )
-
-        assert products[0] == customer_product_entitity0
-        assert products[3] == customer_product_entitity3
-        assert products[9] == customer_product_entitity9
 
     def test_get_products_when_no_products_exist(self):
         products = SQLCustomerProductsRepository().get_first_ten_products()
         assert len(products) == 0
 
     def test_get_product_by_id_successfully(self):
-        single_customer_product = self.customer_product_recipe.make(id=3)
+        expected_product = self.customer_product_recipe.make(id=3)
         # Making few ones because to be more sure of it's looking by correct id.
         baker.make("CustomerProduct", id=5)
         baker.make("CustomerProduct", id=1)
 
-        customer_product_entitity = CustomerProductEntity(
-            product_name=single_customer_product.product_name,
-            description=single_customer_product.description,
-            price=single_customer_product.price,
-        )
-        products = SQLCustomerProductsRepository().get_product_by_id(3)
-        assert products == customer_product_entitity
+        result = SQLCustomerProductsRepository().get_product_by_id(3)
+        self.assert_entity_equal(product_model=expected_product, entity=result)
 
     def test_product_by_id_does_not_exist(self):
         baker.make("CustomerProduct", id=5)
         baker.make("CustomerProduct", id=1)
-        product = SQLCustomerProductsRepository().get_product_by_id(3)
-        empty_customer_product_entitity = CustomerProductEntity(
-            product_name="", description="", price=0
-        )
-        assert product == empty_customer_product_entitity
+        result = SQLCustomerProductsRepository().get_product_by_id(99)
+        assert result == CustomerProductEntity(product_name="", description="", price=0)

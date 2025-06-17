@@ -9,9 +9,9 @@ class ProductListView(TemplateView):
     template_name = "product_list.html"
 
     product_list_service = GetProductList(SQLCustomerProductsRepository())
-    products = product_list_service.execute()
 
     def get_context_data(self, **kwargs):
+        products = self.product_list_service.execute()
         context = super().get_context_data(**kwargs)
         context["products"] = [
             {
@@ -19,6 +19,6 @@ class ProductListView(TemplateView):
                 "description": product.description,
                 "price": product.price,
             }
-            for product in self.products
+            for product in products
         ]
         return context
