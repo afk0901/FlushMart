@@ -11,7 +11,7 @@ class SQLCustomerProductsRepository(ICustomerProductsRepository):
     # Implement pagination, first 10, then next 10 etc.
     def get_first_ten_products(self) -> list[CustomerProduct]:
         products = CustomerProduct.objects.all()[:10]
-        # Consider a mapper 
+        # Consider a mapper
         return [
             CustomerProductEntity(
                 product_name=customer_product.product_name,
@@ -24,7 +24,7 @@ class SQLCustomerProductsRepository(ICustomerProductsRepository):
     def get_product_by_id(self, id: int) -> CustomerProductEntity:
         try:
             customer_product = CustomerProduct.objects.get(id=id)
-            # Consider a mapper 
+            # Consider a mapper
             return CustomerProductEntity(
                 product_name=customer_product.product_name,
                 description=customer_product.description,

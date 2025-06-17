@@ -40,7 +40,6 @@ class TestGetProducts(TestCase):
         self.assert_entity_equal(product_model=products[3], entity=products[3])
         self.assert_entity_equal(product_model=products[9], entity=products[9])
 
-
     def test_get_products_when_no_products_exist(self):
         products = SQLCustomerProductsRepository().get_first_ten_products()
         assert len(products) == 0

@@ -10,8 +10,7 @@ def make_fake_product(faker):
     return CustomerProductEntity(
         product_name=faker.ecommerce_name(),
         description=faker.text(max_nb_chars=10000),
-        price=faker.pydecimal(left_digits=7, right_digits=2, 
-                              positive=True),
+        price=faker.pydecimal(left_digits=7, right_digits=2, positive=True),
     )
 
 
