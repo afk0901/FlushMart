@@ -21,6 +21,7 @@ class TestGetProducts(TestCase):
             product_name=lambda: faker.ecommerce_name(),
             description=lambda: faker.text(max_nb_chars=10000),
             price=lambda: faker.pydecimal(left_digits=7, right_digits=2, positive=True),
+            #image=lambda: faker.text(max_nb_chars=100)
         )
 
     def assert_entity_equal(self, product_model, entity):
@@ -28,17 +29,18 @@ class TestGetProducts(TestCase):
             product_name=product_model.product_name,
             description=product_model.description,
             price=product_model.price,
+            image_location=product_model.image
         )
 
     def test_get_first_ten_product_successfully(self):
-        self.customer_product_recipe.make(_quantity=11)
+        expected_products_from_db = self.customer_product_recipe.make(_quantity=11)
         products = SQLCustomerProductsRepository().get_first_ten_products()
         assert len(products) == 10
 
         # Randomly sampling the returned list
-        self.assert_entity_equal(product_model=products[0], entity=products[0])
-        self.assert_entity_equal(product_model=products[3], entity=products[3])
-        self.assert_entity_equal(product_model=products[9], entity=products[9])
+        self.assert_entity_equal(product_model=expected_products_from_db[0], entity=products[0])
+        self.assert_entity_equal(product_model=expected_products_from_db[3], entity=products[3])
+        self.assert_entity_equal(product_model=expected_products_from_db[9], entity=products[9])
 
     def test_get_products_when_no_products_exist(self):
         products = SQLCustomerProductsRepository().get_first_ten_products()

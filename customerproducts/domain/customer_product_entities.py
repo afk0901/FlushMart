@@ -6,3 +6,4 @@ class CustomerProductEntity:
     product_name: str
     description: str
     price: float
+    image_location: str

@@ -1,0 +1,17 @@
+{% load static %}
+
+<a href="#" class="text-decoration-none text-dark">
+<div class="col">
+  <div class="card h-100 shadow-sm">
+    <img src="{% static 'customer_products_images/dummy.jpg' %}" 
+         class="card-img-top" alt="{{ product.product_name }}">
+    <div class="card-body">
+      <h5 class="card-title">{{ product.product_name }}</h5>
+      <p class="card-text">{{ product.description }}</p>
+    </div>
+    <div class="card-footer text-start bg-white border-top-0">
+      <strong class="text-primary fs-5">{{ product.price }} kr.</strong>
+    </div>
+  </div>
+</div>
+</a>

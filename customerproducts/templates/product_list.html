@@ -1,5 +1,12 @@
-<h1>Products</h1>
+{% extends "main.html" %}
 
-{% for product in products %}
-  {% include "product_item.html" %}
-{% endfor %}
+{% block content %}
+
+<div class="row row-cols-1 row-cols-md-4 g-4">
+  {% for product in products %}
+  {% include "product_list_item.html" %}
+  {% empty %}
+  <p>No products available.</p>
+  {% endfor %}
+</div>
+{% endblock %}
