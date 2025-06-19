@@ -17,8 +17,7 @@ class ProductListView(TemplateView):
             {
                 "product_name": product.product_name,
                 "description": product.description,
-                "price": product.price,
-                "image_url": product.image_location
+                "price": product.price
             }
             for product in products
         ]

@@ -20,7 +20,8 @@ class TestGetProducts(TestCase):
             "CustomerProduct",
             product_name=lambda: faker.ecommerce_name(),
             description=lambda: faker.text(max_nb_chars=10000),
-            price=lambda: faker.pydecimal(left_digits=7, right_digits=2, positive=True)
+            price=lambda: faker.pydecimal(left_digits=7, right_digits=2, 
+                                          positive=True)
         )
 
     def assert_entity_equal(self, product_model, entity):

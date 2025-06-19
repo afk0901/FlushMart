@@ -14,5 +14,12 @@ class GetProductList:
 
 class GetProductById: ...
 
+class GetProductCategories:
+
+    def __init__(self, repo: ICustomerProductsRepository):
+        self.repo = repo
+
+    def execute(self):
+        return self.repo.get_categories_names()
 
 class GetProductListFilteredByCategory: ...

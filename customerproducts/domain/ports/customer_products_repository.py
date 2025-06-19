@@ -8,3 +8,6 @@ class ICustomerProductsRepository(ABC):
 
     def get_product_by_id(id: int):
         pass
+
+    def get_categories_names(self):
+        pass
