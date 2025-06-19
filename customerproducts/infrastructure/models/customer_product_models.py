@@ -20,7 +20,6 @@ class CustomerProduct(models.Model):
     product_name = models.CharField(default="")
     description = models.TextField(default="")
     price = models.DecimalField(default=0.0, decimal_places=2, max_digits=10)
-    image = models.ImageField(upload_to="./media/customer_products_images/")
 
 
 # General feature section so that we can have many extra features for each product.

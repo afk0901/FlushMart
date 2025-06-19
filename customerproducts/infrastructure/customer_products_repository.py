@@ -16,8 +16,7 @@ class SQLCustomerProductsRepository(ICustomerProductsRepository):
             CustomerProductEntity(
                 product_name=customer_product.product_name,
                 description=customer_product.description,
-                price=customer_product.price,
-                image_location=customer_product.image
+                price=customer_product.price
             )
             for customer_product in products
         ]
