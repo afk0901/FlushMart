@@ -1,4 +1,4 @@
-from customerproducts.domain.customer_product_entities import CustomerProduct
+from customerproducts.domain.customer_product import CustomerProduct
 from customerproducts.application.product_services import GetProductList
 from unittest.mock import Mock
 from faker import Faker

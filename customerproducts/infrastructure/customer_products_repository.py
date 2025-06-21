@@ -4,7 +4,7 @@ from customerproducts.infrastructure.models.customer_product_models import (
 from customerproducts.domain.ports.customer_products_repository import (
     ICustomerProductsRepository,
 )
-from customerproducts.domain.customer_product_entities import CustomerProduct, CustomerProductCategory
+from customerproducts.domain.customer_product import CustomerProduct, CustomerProductCategory
 
 
 class SQLCustomerProductsRepository(ICustomerProductsRepository):
@@ -16,7 +16,8 @@ class SQLCustomerProductsRepository(ICustomerProductsRepository):
             CustomerProduct(
                 product_name=customer_product.product_name,
                 description=customer_product.description,
-                price=customer_product.price
+                price=customer_product.price,
+                image_url=customer_product.image
             )
             for customer_product in products
         ]
@@ -29,9 +30,10 @@ class SQLCustomerProductsRepository(ICustomerProductsRepository):
                 product_name=customer_product.product_name,
                 description=customer_product.description,
                 price=customer_product.price,
+                image_url=customer_product.image
             )
         except CustomerProductModel.DoesNotExist:
-            return CustomerProduct(product_name="", description="", price=0)
+            return CustomerProduct()
     
     # Strongly tied to product at the moment, so it stays here.
     def get_categories_names(self):

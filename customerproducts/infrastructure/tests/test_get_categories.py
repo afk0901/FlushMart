@@ -5,7 +5,7 @@ from customerproducts.infrastructure.customer_products_repository import (
     SQLCustomerProductsRepository,
 )
 from model_bakery.recipe import Recipe
-from customerproducts. domain.customer_product_entities import CustomerProductCategory
+from customerproducts.domain.customer_product import CustomerProductCategory
 from model_bakery import baker
 
 

@@ -3,36 +3,25 @@ from customerproducts.infrastructure.customer_products_repository import (
     SQLCustomerProductsRepository,
 )
 from model_bakery import baker
-from model_bakery.recipe import Recipe
-from customerproducts.domain.customer_product_entities import CustomerProduct
-from faker import Faker
-import faker_commerce
-
+from customerproducts.domain.customer_product import CustomerProduct
+from product_mocks import mock_product
 
 class TestGetProducts(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        faker = Faker()
-        faker.add_provider(faker_commerce.Provider)
-
-        cls.customer_product_recipe = Recipe(
-            "CustomerProductModel",
-            product_name=lambda: faker.ecommerce_name(),
-            description=lambda: faker.text(max_nb_chars=10000),
-            price=lambda: faker.pydecimal(left_digits=7, right_digits=2, 
-                                          positive=True)
-        )
+        cls.product = mock_product()
 
     def assert_entity_equal(self, product_model, entity):
         assert entity == CustomerProduct(
             product_name=product_model.product_name,
             description=product_model.description,
-            price=product_model.price
+            price=product_model.price,
+            image_url= product_model.image
         )
 
     def test_get_first_ten_product_successfully(self):
-        expected_products_from_db = self.customer_product_recipe.make(_quantity=11)
+        expected_products_from_db = self.product.make(_quantity=11)
         products = SQLCustomerProductsRepository().get_first_ten_products()
         assert len(products) == 10
 
@@ -46,7 +35,7 @@ class TestGetProducts(TestCase):
         assert len(products) == 0
 
     def test_get_product_by_id_successfully(self):
-        expected_product = self.customer_product_recipe.make(id=3)
+        expected_product = self.product.make(id=3)
         # Making few ones because to be more sure of it's looking by correct id.
         baker.make("CustomerProductModel", id=5)
         baker.make("CustomerProductModel", id=1)
@@ -58,4 +47,5 @@ class TestGetProducts(TestCase):
         baker.make("CustomerProductModel", id=5)
         baker.make("CustomerProductModel", id=1)
         result = SQLCustomerProductsRepository().get_product_by_id(99)
-        assert result == CustomerProduct(product_name="", description="", price=0)
+        assert result == CustomerProduct()
+        
