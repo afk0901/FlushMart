@@ -32,7 +32,9 @@ This project is a **work-in-progress** implementation inspired by **Hexagonal Ar
 
 4. **Run the development server**
 
-    ```python manage.py runserver```
+    1. Before you run the development server to try things out, you will have to run the```populate_products.py``` script located at the root folder to populate the database of products as there is no way for the user to insert products yet.
+
+   2. Then run the server: ```python manage.py runserver```
 
 ## 🧪 Tests
 
