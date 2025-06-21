@@ -2,11 +2,11 @@ from dataclasses import dataclass
 
 
 @dataclass
-class CustomerProductEntity:
+class CustomerProduct:
     product_name: str
     description: str
     price: float
 
 @dataclass
-class CustomerProductCategoryEntity:
+class CustomerProductCategory:
     name: str

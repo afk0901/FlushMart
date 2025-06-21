@@ -1,40 +1,36 @@
 from django.db import models
 
-"""
-Products for a customer to interact with.
-"""
-
-
 # The general product which the user will interact with.
-class CustomerProduct(models.Model):
+class CustomerProductModel(models.Model):
     warranty = models.OneToOneField(
-        "CustomerProductWarranty",
+        "CustomerProductWarrantyModel",
         on_delete=models.CASCADE,
         related_name="customer_product_warranty",
     )
     category = models.ForeignKey(
-        "CustomerProductCategory",
+        "CustomerProductCategoryModel",
         on_delete=models.CASCADE,
         related_name="customer_product_category",
     )
+
     product_name = models.CharField(default="")
     description = models.TextField(default="")
     price = models.DecimalField(default=0.0, decimal_places=2, max_digits=10)
 
 
 # General feature section so that we can have many extra features for each product.
-class CustomerProductFeatureSection(models.Model):
+class CustomerFeatureSectionModel(models.Model):
     customer_product = models.ForeignKey(
-        "CustomerProduct", on_delete=models.CASCADE, related_name="customer_product"
+        "CustomerProductModel", on_delete=models.CASCADE, related_name="customer_product"
     )
     section_title = models.CharField(default="")
 
 
 # There can be different names and description for each feature in the feature section,
 # need to know which feature relates to which feature section.
-class CustomerProductFeature(models.Model):
+class CustomerProductFeatureModel(models.Model):
     customer_product_feature_section = models.ForeignKey(
-        "CustomerProduct",
+        "CustomerFeatureSectionModel",
         on_delete=models.CASCADE,
         related_name="customer_product_feature_section",
     )
@@ -42,10 +38,10 @@ class CustomerProductFeature(models.Model):
     description = models.CharField(default="")
 
 
-class CustomerProductWarranty(models.Model):
+class CustomerProductWarrantyModel(models.Model):
     warranty_start_date = models.DateField()
     warranty_end_date = models.DateField()
 
 
-class CustomerProductCategory(models.Model):
+class CustomerProductCategoryModel(models.Model):
     name = models.CharField(default="")

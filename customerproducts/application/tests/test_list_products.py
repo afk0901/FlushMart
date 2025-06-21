@@ -1,4 +1,4 @@
-from customerproducts.domain.customer_product_entities import CustomerProductEntity
+from customerproducts.domain.customer_product_entities import CustomerProduct
 from customerproducts.application.product_services import GetProductList
 from unittest.mock import Mock
 from faker import Faker
@@ -7,7 +7,7 @@ import pytest
 
 
 def make_fake_product(faker):
-    return CustomerProductEntity(
+    return CustomerProduct(
         product_name=lambda: faker.ecommerce_name(),
         description=lambda: faker.text(max_nb_chars=10000),
         price=lambda: faker.pydecimal(left_digits=7, right_digits=2, positive=True),

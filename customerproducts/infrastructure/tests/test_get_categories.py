@@ -5,7 +5,7 @@ from customerproducts.infrastructure.customer_products_repository import (
     SQLCustomerProductsRepository,
 )
 from model_bakery.recipe import Recipe
-from customerproducts. domain.customer_product_entities import CustomerProductCategoryEntity
+from customerproducts. domain.customer_product_entities import CustomerProductCategory
 from model_bakery import baker
 
 
@@ -17,12 +17,12 @@ class TestGetCategories(TestCase):
         faker.add_provider(faker_commerce.Provider)
 
         cls.categories_recipe = Recipe(
-            "CustomerProductCategory",
+            "CustomerProductCategoryModel",
             name=lambda: faker.text(max_nb_chars=100)
         )
 
     def assert_entity_equal(self, product_model, entity):
-        assert entity == CustomerProductCategoryEntity(name=product_model.name)
+        assert entity == CustomerProductCategory(name=product_model.name)
 
     def test_get_categories_names(self):
         expected_categories_from_db = self.categories_recipe.make(_quantity=5)
